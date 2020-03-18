@@ -1,0 +1,43 @@
+language: php
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - 7.3
+  - 7.4
+
+matrix:
+  fast_finish: true
+
+before_install:
+  - composer self-update
+
+install:
+  - composer install --no-interaction --no-suggest --no-progress
+  - composer create-project aipng/coding-standard temp/coding-standard --no-progress
+
+jobs:
+  allow_failures:
+    - script: temp/coding-standard/phpcs src/ tests/
+      php: 7.4
+
+  include:
+    - stage: Unit tests & static analysis
+      script:
+        - vendor/bin/phpunit tests/
+        - vendor/bin/phpstan analyze
+
+    - stage: Code standards check
+      script:
+        - temp/coding-standard/phpcs src/ tests/
+
+after_failure:
+  # Print *.actual content
+  - 'for i in $(find ./tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done'
+
+notifications:
+  email: false
