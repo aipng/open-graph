@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace AipNg\OpenGraphTests;
 
+use AipNg\OpenGraph\MetaArticle;
 use AipNg\OpenGraph\MetaTags;
 use AipNg\OpenGraph\MetaType;
 use AipNg\OpenGraph\OpenGraph;
@@ -44,6 +45,31 @@ final class OpenGraphTest extends TestCase
 			'og:image:type' => 'image/jpg',
 			'og:description' => 'description',
 			'og:site_name' => 'site name',
+		];
+
+		$this->assertEquals($result, $og->toArray());
+	}
+
+
+	public function testArticle(): void
+	{
+		$og = new OpenGraph;
+		$og->article('title', new \DateTimeImmutable('2020-01-02 12:13:14'), 'section', ['tag-1', 'tag-2']);
+
+		$this->assertTrue($og->hasTag(MetaTags::OG_TITLE), 'Missing title tag!');
+		$this->assertTrue($og->hasTag(MetaArticle::ARTICLE_PUBLISHED_TIME), 'Missing published datetime tag!');
+		$this->assertTrue($og->hasTag(MetaArticle::ARTICLE_SECTION), 'Missing section tag!');
+		$this->assertTrue($og->hasTag(MetaArticle::ARTICLE_TAG), 'Missing article tag tag!');
+
+		$result = [
+			'og:title' => 'title',
+			'og:type' => 'article',
+			'article:published_time' => '2020-01-02T12:13:14+0100',
+			'article:section' => 'section',
+			'article:tag' => [
+				'tag-1',
+				'tag-2',
+			],
 		];
 
 		$this->assertEquals($result, $og->toArray());

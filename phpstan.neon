@@ -9,3 +9,8 @@ parameters:
 	paths:
 		- %rootDir%/../../../src
 		- %rootDir%/../../../tests
+
+	ignoreErrors:
+		-
+			message: '#Cannot assign new offset to string\.#'
+			path: src/OpenGraph.php

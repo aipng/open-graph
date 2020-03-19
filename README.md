@@ -8,6 +8,8 @@ OpenGraph is an extra simple library for generating basic set of [Open Graph](ht
 
 Example of usage:
 
+Base
+----
 ```php
 use AipNg\OpenGraph\OpenGraph;
 use AipNg\OpenGraph\MetaTags;
@@ -27,4 +29,29 @@ $og
 var_dump($og->hasTag(MetaTags::OG_TITLE)); // true
 
 $og->toArray();
+```
+
+Article
+----
+```php
+use AipNg\OpenGraph\OpenGraph;
+
+$og = new OpenGraph;
+
+$og->article('title', new \DateTimeImmutable('2020-01-02 12:13:14'), 'section', ['tag-1', 'tag-2']);
+
+$og->toArray();
+
+/**
+[
+    'og:title' => 'title',
+    'og:type' => 'article',
+    'article:published_time' => '2020-01-02T12:13:14+0100',
+    'article:section' => 'section',
+    'article:tag' => [
+        'tag-1',
+        'tag-2',
+    ],
+];
+*/
 ```

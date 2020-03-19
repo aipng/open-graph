@@ -10,7 +10,7 @@ use Nette\Utils\Strings;
 final class OpenGraph
 {
 
-	/** @var string[]|array<string, string> */
+	/** @var string[]|array<string, string|string[]> */
 	protected $tags = [];
 
 
@@ -111,6 +111,36 @@ final class OpenGraph
 		}
 
 		$this->tags[MetaTags::OG_SITE_NAME] = $siteName;
+
+		return $this;
+	}
+
+
+	/**
+	 * @param string $title
+	 * @param \DateTimeImmutable|null $datePublished
+	 * @param string|null $section
+	 * @param string[] $articleTags
+	 *
+	 * @return \AipNg\OpenGraph\OpenGraph
+	 */
+	public function article(string $title, ?\DateTimeImmutable $datePublished = null, ?string $section = null, array $articleTags = []): self
+	{
+		$this
+			->title($title)
+			->type(MetaType::ARTICLE);
+
+		if ($datePublished !== null) {
+			$this->tags[MetaArticle::ARTICLE_PUBLISHED_TIME] = $datePublished->format(\DateTimeImmutable::ISO8601);
+		}
+
+		if ($section !== null) {
+			$this->tags[MetaArticle::ARTICLE_SECTION] = $section;
+		}
+
+		foreach ($articleTags as $tag) {
+			$this->tags[MetaArticle::ARTICLE_TAG][] = $tag;
+		}
 
 		return $this;
 	}
