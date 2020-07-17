@@ -54,7 +54,7 @@ final class OpenGraphTest extends TestCase
 	public function testArticle(): void
 	{
 		$og = new OpenGraph;
-		$og->article('title', new \DateTimeImmutable('2020-01-02 12:13:14'), 'section', ['tag-1', 'tag-2']);
+		$og->article('title', new \DateTimeImmutable('2020-01-02 12:13:14', new \DateTimeZone('Europe/Prague')), 'section', ['tag-1', 'tag-2']);
 
 		$this->assertTrue($og->hasTag(MetaTags::OG_TITLE), 'Missing title tag!');
 		$this->assertTrue($og->hasTag(MetaArticle::ARTICLE_PUBLISHED_TIME), 'Missing published datetime tag!');
