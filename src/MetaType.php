@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace AipNg\OpenGraph;
 
-use Consistence\Enum\Enum;
+use MyCLabs\Enum\Enum;
 
+/**
+ * @extends \MyCLabs\Enum\Enum<string>
+ */
 final class MetaType extends Enum
 {
 

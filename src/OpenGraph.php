@@ -11,7 +11,7 @@ final class OpenGraph
 {
 
 	/** @var string[]|array<string, string|string[]> */
-	protected $tags = [];
+	protected array $tags = [];
 
 
 	public function hasTag(string $name): bool
@@ -46,7 +46,7 @@ final class OpenGraph
 
 	public function type(string $type): self
 	{
-		if (!MetaType::isValidValue($type)) {
+		if (!MetaType::isValid($type)) {
 			throw new \InvalidArgumentException(sprintf('Given type (%s) not supported!', $type));
 		}
 
