@@ -131,7 +131,7 @@ final class OpenGraph
 			->type(MetaType::ARTICLE);
 
 		if ($datePublished !== null) {
-			$this->tags[MetaArticle::ARTICLE_PUBLISHED_TIME] = $datePublished->format(\DateTimeImmutable::ISO8601);
+			$this->tags[MetaArticle::ARTICLE_PUBLISHED_TIME] = $datePublished->format(\DateTimeImmutable::ATOM);
 		}
 
 		if ($section !== null) {

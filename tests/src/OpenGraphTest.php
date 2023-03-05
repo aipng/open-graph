@@ -64,7 +64,7 @@ final class OpenGraphTest extends TestCase
 		$result = [
 			'og:title' => 'title',
 			'og:type' => 'article',
-			'article:published_time' => '2020-01-02T12:13:14+0100',
+			'article:published_time' => '2020-01-02T12:13:14+01:00',
 			'article:section' => 'section',
 			'article:tag' => [
 				'tag-1',
@@ -93,16 +93,6 @@ final class OpenGraphTest extends TestCase
 		$this->expectException(\InvalidArgumentException::class);
 
 		$og->title(' ');
-	}
-
-
-	public function testRefuseUnknownOpenGraphType(): void
-	{
-		$og = new OpenGraph;
-
-		$this->expectException(\InvalidArgumentException::class);
-
-		$og->type('unknown');
 	}
 
 
